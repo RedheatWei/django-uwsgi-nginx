@@ -30,8 +30,8 @@ RUN apt-get install -y \
 	supervisor \
 	libmysqlclient-dev \
 	sqlite3 && \
-	pip3 install -U pip setuptools && \
-   rm -rf /var/lib/apt/lists/*
+	pip3 install -U pip setuptools
+#   rm -rf /var/lib/apt/lists/*
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
