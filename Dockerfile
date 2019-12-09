@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:17.10
+FROM ubuntu:18.04
 
 MAINTAINER Redheat
 
 # Install required packages and remove the apt packages cache when done.
 RUN apt-get update -y
-RUN apt-get upgrade -y
+#RUN apt-get upgrade -y
 RUN apt-get install -y \
 	apt-utils \
 	git \
@@ -31,7 +31,6 @@ RUN apt-get install -y \
 	libmysqlclient-dev \
 	sqlite3 && \
 	pip3 install -U pip setuptools
-#   rm -rf /var/lib/apt/lists/*
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
@@ -40,6 +39,7 @@ RUN pip3 install uwsgi
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 COPY nginx-app.conf /etc/nginx/sites-available/default
 COPY supervisor-app.conf /etc/supervisor/conf.d/
+COPY pip.conf /etc/pip.conf
 
 # COPY requirements.txt and RUN pip install BEFORE adding the rest of your code, this will cause Docker's caching mechanism
 # to prevent re-installing (all your) dependencies when you made a change a line or two in your app.
